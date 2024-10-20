@@ -15,5 +15,4 @@ public class Counter implements Serializable {
   private LocalDateTime createdAt;
 
   private LocalDateTime updatedAt;
-  
 }
