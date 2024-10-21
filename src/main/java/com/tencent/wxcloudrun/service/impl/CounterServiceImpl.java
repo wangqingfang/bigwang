@@ -32,4 +32,9 @@ public class CounterServiceImpl implements CounterService {
   public void clearCount(Integer id) {
     countersMapper.clearCount(id);
   }
+
+  @Override
+  public Optional<IndexInfo> getIndexInfo(Integer id) {
+    return Optional.ofNullable(countersMapper.getIndexInfo(id));
+  }
 }
