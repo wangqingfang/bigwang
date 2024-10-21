@@ -5,11 +5,13 @@ import org.slf4j.LoggerFactory;
 import com.tencent.wxcloudrun.config.ApiResponse;
 import com.tencent.wxcloudrun.dto.CounterRequest;
 import com.tencent.wxcloudrun.model.Counter;
+import com.tencent.wxcloudrun.model.IndexInfo;
 import com.tencent.wxcloudrun.service.CounterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
@@ -17,7 +19,7 @@ import java.util.Optional;
 import java.util.List;
 
 /**
- * counter控制器
+ * counter控制�?
  */
 @RestController
 
@@ -50,7 +52,7 @@ public class CounterController {
 
 
   /**
-   * 更新计数，自增或者清零
+   * 更新计数，自增或者清�?
    * @param request {@link CounterRequest}
    * @return API response json
    */
@@ -78,6 +80,12 @@ public class CounterController {
     } else {
       return ApiResponse.error("参数action错误");
     }
+  }
+
+  @GetMapping(value = "/api/index-info")
+  ApiResponse getIndexInfo(@RequestParam Integer id) {
+      Optional<IndexInfo> indexInfo = counterService.getIndexInfo(id);
+      return indexInfo.map(ApiResponse::ok).orElseGet(() -> ApiResponse.error("No data found"));
   }
   
 }

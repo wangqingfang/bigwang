@@ -9,6 +9,13 @@
         <result property="updatedAt" column="updatedAt" javaType="java.time.LocalDateTime"  />
     </resultMap>
 
+    <resultMap id="IndexInfo" type="com.tencent.wxcloudrun.model.IndexInfo">
+        <id property="LedgerID" column="LedgerID"/>
+        <result property="LedgerName" column="LedgerName"/>
+        <result property="MemberCount" column="MemberCount"/>
+        <result property="RecordCount" column="RecordCount"/>
+    </resultMap>
+
     <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">
         SELECT `id`, `count`, `createdAt`, `updatedAt`
         FROM Counters
@@ -28,7 +35,7 @@
         ON DUPLICATE KEY UPDATE count=#{count}
     </update>
 
-     <select id="getIndexInfo" resultMap="countersMapper" parameterType="java.lang.Integer">
+     <select id="getIndexInfo" resultMap="IndexInfo" parameterType="java.lang.Integer">
         SELECT 
             L.LedgerID,                             -- ÕË±¾ID
             L.LedgerName,                           -- ÕË±¾Ãû
