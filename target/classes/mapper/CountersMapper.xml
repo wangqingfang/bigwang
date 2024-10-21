@@ -36,21 +36,17 @@
     </update>
 
      <select id="getIndexInfo" resultMap="IndexInfo" parameterType="java.lang.Integer">
-        SELECT 
-            L.LedgerID,                             -- 账本ID
-            L.LedgerName,                           -- 账本名
-            COUNT(DISTINCT LP2.UserID) AS MemberCount, -- 参与该账本的成员数
-            L.RecordCount                           -- 账本记录数
+        SELECT L.LedgerID, L.LedgerName, COUNT(DISTINCT LP2.UserID) AS MemberCount, L.RecordCount
         FROM 
-            LedgerParticipant LP                   -- 账本参与者表 (当前用户的参与信息)
+            LedgerParticipant LP
         JOIN 
-            Ledger L ON LP.LedgerID = L.LedgerID   -- 连接到账本表，获取账本信息
-        JOIN 
-            LedgerParticipant LP2 ON L.LedgerID = LP2.LedgerID -- 连接回账本参与者表，用于统计成员数
+            Ledger L ON LP.LedgerID = L.LedgerID
+        JOIN
+            LedgerParticipant LP2 ON L.LedgerID = LP2.LedgerID
         WHERE 
-            LP.UserID = #{id}                        -- 当前用户的UserID
+            LP.UserID = #{id}
         GROUP BY 
-            L.LedgerID, L.LedgerName, L.RecordCount;
+            L.LedgerID, L.LedgerName, L.RecordCount
     </select>
 
 </mapper>
