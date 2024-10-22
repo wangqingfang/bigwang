@@ -84,11 +84,14 @@ public class CounterController {
 
   @GetMapping(value = "/api/index-info")
   ApiResponse getIndexInfo(@RequestParam Integer id) {
-      System.out.println("getIndexInfo method called");
       logger.info("/api/index-info post id {}", id);
-      Optional<IndexInfo> indexInfo = counterService.getIndexInfo(id);
-      
-      return indexInfo.map(ApiResponse::ok).orElseGet(() -> ApiResponse.error("No data found"));
+      List<IndexInfo> indexInfoList = counterService.getIndexInfo(id);
+    
+      if (indexInfoList.isEmpty()) {
+          return ApiResponse.error("No data found");
+      } else {
+          return ApiResponse.ok(indexInfoList);
+      }
   }
 
   

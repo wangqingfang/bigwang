@@ -14,5 +14,5 @@ public interface CounterService {
 
   void clearCount(Integer id);
 
-  Optional<IndexInfo> getIndexInfo(Integer id);
+  List<IndexInfo> getIndexInfo(Integer id);
 }

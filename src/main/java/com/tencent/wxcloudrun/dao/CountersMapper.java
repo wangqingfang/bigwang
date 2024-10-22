@@ -15,5 +15,5 @@ public interface CountersMapper {
 
   void clearCount(@Param("id") Integer id);
 
-  IndexInfo getIndexInfo(@Param("id") Integer id);
+  List<IndexInfo> getIndexInfo(@Param("id") Integer id);
 }
