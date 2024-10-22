@@ -35,7 +35,7 @@
         ON DUPLICATE KEY UPDATE count=#{count}
     </update>
 
-     <select id="getIndexInfo" resultMap="IndexInfo" parameterType="java.lang.Integer">
+    <select id="getIndexInfo" resultMap="IndexInfo" parameterType="java.lang.Integer">
         SELECT L.LedgerID, L.LedgerName, COUNT(DISTINCT LP2.UserID) AS MemberCount, L.RecordCount
         FROM 
             LedgerParticipant LP
