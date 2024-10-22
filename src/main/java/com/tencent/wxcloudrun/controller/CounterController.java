@@ -87,6 +87,7 @@ public class CounterController {
       System.out.println("getIndexInfo method called");
       logger.info("/api/index-info post id {}", id);
       Optional<IndexInfo> indexInfo = counterService.getIndexInfo(id);
+      
       return indexInfo.map(ApiResponse::ok).orElseGet(() -> ApiResponse.error("No data found"));
   }
 
