@@ -47,7 +47,6 @@
             LP.UserID = #{id}
         GROUP BY 
             L.LedgerID, L.LedgerName, L.RecordCount
-        Limit 1
     </select>
 
 </mapper>
