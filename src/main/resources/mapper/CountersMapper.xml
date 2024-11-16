@@ -14,6 +14,7 @@
         <result property="LedgerName" column="LedgerName"/>
         <result property="MemberCount" column="MemberCount"/>
         <result property="RecordCount" column="RecordCount"/>
+        <result property="isCreator" column="isCreator"/>
     </resultMap>
 
     <select id="getCounter" resultMap="countersMapper" parameterType="java.lang.Integer">
@@ -36,17 +37,20 @@
     </update>
 
     <select id="getIndexInfo" resultMap="IndexInfo" parameterType="java.lang.Integer">
-        SELECT L.LedgerID, L.LedgerName, COUNT(DISTINCT LP2.UserID) AS MemberCount, L.RecordCount
+        SELECT 
+            l.LedgerID,
+            l.LedgerName,
+            l.MemberCount,
+            l.RecordCount,
+            lp.isCreator
         FROM 
-            LedgerParticipant LP
-        JOIN 
-            Ledger L ON LP.LedgerID = L.LedgerID
-        JOIN
-            LedgerParticipant LP2 ON L.LedgerID = LP2.LedgerID
+            Ledger l
+        INNER JOIN 
+            LedgerParticipant lp
+        ON 
+            l.LedgerID = lp.LedgerID
         WHERE 
-            LP.UserID = #{id}
-        GROUP BY 
-            L.LedgerID, L.LedgerName, L.RecordCount
+            lp.UserID = #{id};
     </select>
 
 </mapper>

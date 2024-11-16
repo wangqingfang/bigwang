@@ -15,4 +15,6 @@ public class IndexInfo implements Serializable {
   private Integer MemberCount;
 
   private Integer RecordCount;
+
+  private Boolean isCreator;
 }

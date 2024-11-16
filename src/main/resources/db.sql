@@ -17,24 +17,27 @@ CREATE TABLE User (
 
 // 账本表 (Ledger)
 CREATE TABLE Ledger (
-    LedgerID INT AUTO_INCREMENT PRIMARY KEY,
-    CreatorID INT NOT NULL,
-    LedgerName VARCHAR(100) NOT NULL,
-    CreationTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    RecordCount INT DEFAULT 0,
-    TotalExpense DECIMAL(10, 2) DEFAULT 0.00,
+    LedgerID INT AUTO_INCREMENT PRIMARY KEY,          -- 账本 ID
+    CreatorID INT NOT NULL,                           -- 创建者的用户 ID
+    LedgerName VARCHAR(100) NOT NULL,                 -- 账本名称
+    MemberCount INT DEFAULT 0,                        -- 成员数量（新增字段）
+    RecordCount INT DEFAULT 0,                        -- 消费记录数
+    TotalExpense DECIMAL(10, 2) DEFAULT 0.00,         -- 总消费金额
+    CreationTime TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- 创建时间
     FOREIGN KEY (CreatorID) REFERENCES User(UserID) ON DELETE CASCADE
 );
 
 // 账本参与者表 (LedgerParticipant)
 CREATE TABLE LedgerParticipant (
-    ParticipantID INT AUTO_INCREMENT PRIMARY KEY,
-    LedgerID INT NOT NULL,
-    UserID INT NOT NULL,
-    Role ENUM('creator', 'editor') DEFAULT 'editor', -- 创建者或编辑者角色
+    ParticipantID INT AUTO_INCREMENT PRIMARY KEY,    -- 主键，自增 ID
+    LedgerID INT NOT NULL,                           -- 关联的账本 ID
+    UserID INT NOT NULL,                             -- 关联的用户 ID
+    Role ENUM('creator', 'editor') DEFAULT 'editor', -- 用户在账本中的角色
+    isCreator BOOLEAN DEFAULT 0,                    -- 是否为创建者（新增字段）
     FOREIGN KEY (LedgerID) REFERENCES Ledger(LedgerID) ON DELETE CASCADE,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE
 );
+
 
 // 消费记录表 (ExpenseRecord)
 CREATE TABLE ExpenseRecord (
