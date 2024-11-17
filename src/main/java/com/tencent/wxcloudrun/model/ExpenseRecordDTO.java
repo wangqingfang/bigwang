@@ -1,4 +1,4 @@
-package com.tencent.wxcloudrun.dto;
+package com.tencent.wxcloudrun.model;
 
 public class ExpenseRecordDTO {
     private int id;          // Ïû·Ñ¼ÇÂ¼ ID
