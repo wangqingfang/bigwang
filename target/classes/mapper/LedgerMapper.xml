@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.wxcloudrun.mapper.LedgerMapper">
+
+    <!-- ResultMap 定义 -->
+    <resultMap id="LedgerDetailDTO" type="com.tencent.wxcloudrun.model.LedgerDetailDTO">
+        <result property="title" column="LedgerName"/>
+        <result property="total" column="TotalExpense"/>
+        <result property="myAmount" column="MyAmount"/>
+        <collection property="records" ofType="com.tencent.wxcloudrun.model.ExpenseRecordDTO">
+            <id property="id" column="RecordID"/>
+            <result property="name" column="RecorderName"/>
+            <result property="category" column="Category"/>
+            <result property="type" column="SplitType"/>
+            <result property="date" column="ExpenseDate"/>
+            <result property="amount" column="Amount"/>
+        </collection>
+    </resultMap>
+
+    <!-- 查询单个账本的详细信息 -->
+    <select id="getLedgerDetail" resultMap="LedgerDetailDTO">
+        SELECT 
+            l.LedgerName,
+            l.TotalExpense,
+            (
+                SELECT SUM(es.ShareAmount)
+                FROM ExpenseShare es
+                WHERE es.UserID = #{userId}
+                  AND es.RecordID IN (
+                    SELECT er.RecordID 
+                    FROM ExpenseRecord er 
+                    WHERE er.LedgerID = l.LedgerID
+                  )
+            ) AS MyAmount,
+            er.RecordID,
+            u.Username AS RecorderName,
+            er.Category,
+            er.SplitType,
+            DATE_FORMAT(er.ExpenseTime, '%m.%d') AS ExpenseDate,
+            er.Amount
+        FROM Ledger l
+        LEFT JOIN ExpenseRecord er ON l.LedgerID = er.LedgerID
+        LEFT JOIN User u ON er.RecorderID = u.UserID
+        WHERE l.LedgerID = #{ledgerId}
+    </select>
+
+</mapper>
