@@ -39,7 +39,6 @@ CREATE TABLE LedgerParticipant (
 );
 
 
-
 // 消费记录表 (ExpenseRecord)
 CREATE TABLE ExpenseRecord (
     RecordID INT AUTO_INCREMENT PRIMARY KEY,
