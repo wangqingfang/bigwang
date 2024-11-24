@@ -1,7 +1,7 @@
 package com.tencent.wxcloudrun.service;
 
 import com.tencent.wxcloudrun.model.LedgerDetailDTO;
-import import com.tencent.wxcloudrun.model.ReportDTO;
+import com.tencent.wxcloudrun.model.ReportDTO;
 
 public interface LedgerService {
     /**

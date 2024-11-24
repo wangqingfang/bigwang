@@ -17,11 +17,9 @@ public class LedgerServiceImpl implements LedgerService {
     public LedgerDetailDTO getLedgerDetail(int ledgerId, int userId) {
         return ledgerMapper.getLedgerDetail(ledgerId, userId);
     }
-    
+
     @Override
     public ReportDTO getLedgerReport(int ledgerId, int userId) {
-        // Implement logic to fetch data and populate ReportDTO
-        // This is a placeholder implementation
-        return new ReportDTO();
+        return ledgerMapper.getLedgerReport(ledgerId, userId);
     }
 }

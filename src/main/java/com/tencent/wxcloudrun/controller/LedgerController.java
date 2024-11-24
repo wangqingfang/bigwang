@@ -21,7 +21,7 @@ public class LedgerController {
 
     @GetMapping("/report")
     public ReportDTO getLedgerReport(@RequestParam("ledgerId") int ledgerId, 
-                                     @RequestParam("userId") int userId) {
+                                    @RequestParam("userId") int userId) {
         return ledgerService.getLedgerReport(ledgerId, userId);
     }
 }
