@@ -46,10 +46,16 @@
     <select id="getLedgerReport" resultType="com.tencent.wxcloudrun.model.ReportDTO">
         SELECT 
             SUM(er.Amount) AS total,
-            SUM(CASE WHEN es.UserID = #{userId} THEN es.ShareAmount ELSE 0 END) AS myAmount
+            SUM(CASE WHEN es.UserID = #{userId} THEN es.ShareAmount ELSE 0 END) AS myAmount,
+            u.UserID AS id,
+            u.AvatarUrl AS avatarUrl,
+            u.Username AS name,
+            SUM(es.ShareAmount) AS amount
         FROM ExpenseRecord er
         LEFT JOIN ExpenseShare es ON er.RecordID = es.RecordID
-            WHERE er.LedgerID = #{ledgerId}
+        LEFT JOIN User u ON es.UserID = u.UserID
+        WHERE er.LedgerID = #{ledgerId}
+        GROUP BY u.UserID, u.AvatarUrl, u.Username
     </select>
     
 </mapper>
